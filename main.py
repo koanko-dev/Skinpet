@@ -1,6 +1,8 @@
 from fastapi import FastAPI
 from starlette.middleware.cors import CORSMiddleware
 
+from domain.result import result_router
+
 app = FastAPI()
 
 origins = [
@@ -15,4 +17,4 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-app.include_router(question_router.router)
+app.include_router(result_router.router)
