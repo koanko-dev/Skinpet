@@ -15,6 +15,4 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-@app.get('/hello')
-def hello():
-    return {'message': 'hello pybo'}
+app.include_router(question_router.router)
