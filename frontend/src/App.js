@@ -1,19 +1,22 @@
 import { useEffect, useState } from "react";
 
 function App() {
-  const [msg, setMsg] = useState(null)
+  const [result, setResult] = useState({})
+
+  const result_disease_target_num = 1
 
   useEffect(() => {
-    fetch("http://127.0.0.1:8000/hello").then((response) => {
+    fetch(`http://127.0.0.1:8000/api/result/${result_disease_target_num}`).then((response) => {
       response.json().then((json) => {
-        setMsg(json.message);
+        console.log(json)
+        setResult(json);
       });
     });
   }, [])
 
   return (
     <div>
-      {msg === null ? 'loading...' : msg}
+      {result === {} ? 'loading...' : result.title}
     </div>
   );
 }
