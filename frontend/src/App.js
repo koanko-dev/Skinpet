@@ -1,24 +1,35 @@
-import { useEffect, useState } from "react";
+import React from "react";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+
+import RootLayout from "./pages/layout/RootLayout";
+import HomePage from "./pages/HomePage";
+import PredictionPage from "./pages/PredictionPage";
+
+const router = createBrowserRouter([
+  {
+    path: "/",
+    id: "root",
+    element: <RootLayout />,
+    children: [
+      {
+        index: true,
+        element: <HomePage />,
+      },
+      {
+        path: "prediction",
+        children: [
+          {
+            index: true,
+            element: <PredictionPage />
+          },
+        ]
+      },
+    ],
+  },
+]);
 
 function App() {
-  const [result, setResult] = useState({})
-
-  const result_disease_target_num = 1
-
-  useEffect(() => {
-    fetch(`http://127.0.0.1:8000/api/result/${result_disease_target_num}`).then((response) => {
-      response.json().then((json) => {
-        console.log(json)
-        setResult(json);
-      });
-    });
-  }, [])
-
-  return (
-    <div>
-      {result === {} ? 'loading...' : result.title}
-    </div>
-  );
+  return <RouterProvider router={router} />;
 }
 
 export default App;
