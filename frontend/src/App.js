@@ -17,12 +17,7 @@ const router = createBrowserRouter([
       },
       {
         path: "prediction",
-        children: [
-          {
-            index: true,
-            element: <PredictionPage />
-          },
-        ]
+        element: <PredictionPage />
       },
     ],
   },
