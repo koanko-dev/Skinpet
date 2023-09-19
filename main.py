@@ -6,7 +6,6 @@ from domain.result import result_router
 app = FastAPI()
 
 origins = [
-    'http://localhost:3000/prediction',
     'http://localhost:3000',
 ]
 
