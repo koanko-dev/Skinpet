@@ -1,11 +1,13 @@
 import React, { useContext, useState } from "react";
 import PredictionContext from "../store/prediction_context";
+import PredictionQImageStage from "../components/PredictionQImageStage";
 
 const PredictionPage = () => {
   const predictionCtx = useContext(PredictionContext);
   const [textResult, setTextResult] = useState(null);
   const [imgResult, setImgResult] = useState(null);
-
+  const [imageSrc, setImageSrc] = useState(null);
+  
   const textSubmitHandler = () => {
     console.log("text submit!");
     predictionCtx.onShowLoading();
@@ -16,19 +18,53 @@ const PredictionPage = () => {
     predictionCtx.onClickNextStage();
   };
 
-  const imgSubmitHandler = () => {
-    console.log("img submit!");
+  const imgSubmitHandler = async (file) => {
+    if (!file) {
+      return;
+    }
     predictionCtx.onShowLoading();
+
+    const formData = new FormData();
+    formData.append("file", file);
+
     // run yolo model
-    fetch(`http://127.0.0.1:8000/api/result/detection`).then(
-      (response) => {
-        response.json().then((json) => {
-          console.log(json);
-          // save result
-          setImgResult(json.result);
-        });
+    try {
+      const endpoint = "http://127.0.0.1:8000/api/result/detection";
+      const response = await fetch(endpoint, {
+        method: "POST",
+        body: formData,
+      });
+
+      if (response.ok) {
+        const json = await response.json();
+        console.log("res json", json.result);
+
+        const result = {
+          class: json.result[0].class,
+          confidence: json.result[0].confidence,
+        };
+        setImgResult(result);
       }
-    );
+    } catch (err) {
+    //   console.log("err!", err);
+    }
+
+    try {
+      const endpoint = "http://127.0.0.1:8000/api/result/detected_img";
+      const response = await fetch(endpoint, {
+        method: "POST",
+        body: formData,
+      });
+
+      if (response.ok) {
+        const blob = await response.blob();
+        const imageUrl = URL.createObjectURL(blob);
+        setImageSrc(imageUrl);
+      }
+    } catch (err) {
+        console.log("err!", err);
+    }
+
     predictionCtx.onHideLoading();
     predictionCtx.onClickNextStage();
   };
@@ -58,17 +94,11 @@ const PredictionPage = () => {
   // stage 2: QImage
   if (predictionCtx.stage === "QImage" && predictionCtx.isLoading === false) {
     content = (
-      <div>
-        {textResult && (
-          <div>
-            텍스트로만 예측된 결과는 {textResult}입니다. 이미지로 다시 확인하기
-            원한다면
-          </div>
-        )}
-        피부질환 사진을 올려주세요.
-        <button onClick={imgSubmitHandler}>submit</button>
-        <button onClick={clickPrevStageHandler}>prev</button>
-      </div>
+      <PredictionQImageStage
+        textResult={textResult}
+        imgSubmitHandler={imgSubmitHandler}
+        clickPrevStageHandler={clickPrevStageHandler}
+      />
     );
   }
 
@@ -76,8 +106,16 @@ const PredictionPage = () => {
   if (predictionCtx.stage === "result" && predictionCtx.isLoading === false) {
     content = (
       <div>
-        {imgResult && imgResult}
-        <button onClick={clickPrevStageHandler}>다른 이미지로 테스트해보기</button>
+        {imgResult && (
+          <div>
+            <p>{imgResult.class}</p>
+            <p>{imgResult.confidence}</p>
+          </div>
+        )}
+        {imageSrc && <img src={imageSrc} alt="결과이미지" />}
+        <button onClick={clickPrevStageHandler}>
+          다른 이미지로 테스트해보기
+        </button>
       </div>
     );
   }

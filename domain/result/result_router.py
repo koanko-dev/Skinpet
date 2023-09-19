@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
-from fastapi import File
+from fastapi import File, UploadFile
 from starlette.responses import Response
 import io
 from PIL import Image
@@ -17,31 +17,33 @@ router = APIRouter(
 
 model = get_yolov5()
 
-# @router.post("/detection")
-# def detected_result(file: bytes = File(...)):
-#     results_json = segmentation.detect(file)
-#     return {'result': results_json}
-
-@router.post("/object-to-json")
+@router.post("/detection")
 async def detect_disease_return_json_result(file: bytes = File(...)):
     input_image = get_image_from_bytes(file)
     results = model(input_image)
+
     detect_res = results.pandas().xyxy[0].to_json(orient="records")
     detect_res = json.loads(detect_res)
     return {"result": detect_res}
 
-@router.post("/object-to-img")
+@router.post("/detected_img")
 async def detect_disease_return_base64_img(file: bytes = File(...)):
     input_image = get_image_from_bytes(file)
     results = model(input_image)
-    results.render()  # updates results.ims with boxes and labels
 
+    results.render()  # updates results.ims with boxes and labels
     for img in results.ims:
         bytes_io = io.BytesIO()
         img_base64 = Image.fromarray(img)
-        img_base64.save(bytes_io, format="jpg")
+        img_base64.save(bytes_io, format="jpeg")
 
     return Response(content=bytes_io.getvalue(), media_type="image/jpg")
+
+
+
+
+
+
 
 # @router.get("/{disease_id}", response_model=result_schema.DiseaseInfo)
 # def result(disease_id: int, db: Session = Depends(get_db)):
