@@ -1,13 +1,14 @@
 import React, { useContext, useState } from "react";
 import PredictionContext from "../store/prediction_context";
 import PredictionQImageStage from "../components/PredictionQImageStage";
+import PredictionResultStage from "../components/PredictionResultStage";
 
 const PredictionPage = () => {
   const predictionCtx = useContext(PredictionContext);
   const [textResult, setTextResult] = useState(null);
   const [imgResult, setImgResult] = useState(null);
   const [imageSrc, setImageSrc] = useState(null);
-  
+
   const textSubmitHandler = () => {
     console.log("text submit!");
     predictionCtx.onShowLoading();
@@ -46,7 +47,7 @@ const PredictionPage = () => {
         setImgResult(result);
       }
     } catch (err) {
-    //   console.log("err!", err);
+      //   console.log("err!", err);
     }
 
     try {
@@ -62,7 +63,7 @@ const PredictionPage = () => {
         setImageSrc(imageUrl);
       }
     } catch (err) {
-        console.log("err!", err);
+      console.log("err!", err);
     }
 
     predictionCtx.onHideLoading();
@@ -96,8 +97,8 @@ const PredictionPage = () => {
     content = (
       <PredictionQImageStage
         textResult={textResult}
-        imgSubmitHandler={imgSubmitHandler}
-        clickPrevStageHandler={clickPrevStageHandler}
+        onSubmitImg={imgSubmitHandler}
+        onClickPrevStage={clickPrevStageHandler}
       />
     );
   }
@@ -105,18 +106,7 @@ const PredictionPage = () => {
   // stage 3: result
   if (predictionCtx.stage === "result" && predictionCtx.isLoading === false) {
     content = (
-      <div>
-        {imgResult && (
-          <div>
-            <p>{imgResult.class}</p>
-            <p>{imgResult.confidence}</p>
-          </div>
-        )}
-        {imageSrc && <img src={imageSrc} alt="결과이미지" />}
-        <button onClick={clickPrevStageHandler}>
-          다른 이미지로 테스트해보기
-        </button>
-      </div>
+      <PredictionResultStage imgResult={imgResult} imageSrc={imageSrc} onClickPrevStage={clickPrevStageHandler} />
     );
   }
 

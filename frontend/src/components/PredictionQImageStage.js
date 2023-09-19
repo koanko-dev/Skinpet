@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 
 const PredictionQImageStage = (props) => {
-  const { textResult, imgSubmitHandler, clickPrevStageHandler } = props;
+  const { textResult, onSubmitImg, onClickPrevStage } = props;
   const [file, setFile] = useState(null);
 
   const handleFileChange = (e) => {
@@ -22,8 +22,8 @@ const PredictionQImageStage = (props) => {
       <input type="file" onChange={handleFileChange} />
       <div>{file && `${file.name} - ${file.type}`}</div>
       
-      <button onClick={() => imgSubmitHandler(file)}>submit</button>
-      <button onClick={clickPrevStageHandler}>prev</button>
+      <button onClick={() => onSubmitImg(file)}>submit</button>
+      <button onClick={onClickPrevStage}>prev</button>
     </div>
   );
 };
