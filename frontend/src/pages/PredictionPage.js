@@ -20,8 +20,15 @@ const PredictionPage = () => {
     console.log("img submit!");
     predictionCtx.onShowLoading();
     // run yolo model
-    // save result
-    setImgResult("img result");
+    fetch(`http://127.0.0.1:8000/api/result/detection`).then(
+      (response) => {
+        response.json().then((json) => {
+          console.log(json);
+          // save result
+          setImgResult(json.result);
+        });
+      }
+    );
     predictionCtx.onHideLoading();
     predictionCtx.onClickNextStage();
   };

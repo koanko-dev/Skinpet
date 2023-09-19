@@ -1,4 +1,4 @@
-from models import DiseaseInfo, HospitalInfo
+from skinpet_models import DiseaseInfo, HospitalInfo
 from sqlalchemy.orm import Session
 
 
