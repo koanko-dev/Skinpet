@@ -1,6 +1,5 @@
 from pydantic import BaseModel, ConfigDict
 
-
 class DiseaseInfo(BaseModel):
     model_config = ConfigDict(from_attributes=True)
 
@@ -14,7 +13,7 @@ class DiseaseInfo(BaseModel):
 
 class HospitalInfo(BaseModel):
     model_config = ConfigDict(from_attributes=True)
-    
+
     id: int
     name: str
     address: str

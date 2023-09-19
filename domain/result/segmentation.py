@@ -2,8 +2,8 @@ from PIL import Image
 import io
 import torch
 
-def get_yolov5():
-    model = torch.hub.load('ultralytics/yolov5', 'custom', path='model/V2_c_A4_best.pt')
+def get_yolov5(species, specific_model):
+    model = torch.hub.load('ultralytics/yolov5', 'custom', path=f'model/{species}/{specific_model}/best.pt')
     model.conf = 0.2
     return model
 

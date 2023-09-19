@@ -6,6 +6,7 @@ import PredictionResultStage from "../components/PredictionResultStage";
 const PredictionPage = () => {
   const predictionCtx = useContext(PredictionContext);
   const [textResult, setTextResult] = useState(null);
+  const [species, setSpecies] = useState('cat');
   const [imgResult, setImgResult] = useState(null);
   const [imageSrc, setImageSrc] = useState(null);
 
@@ -14,7 +15,7 @@ const PredictionPage = () => {
     predictionCtx.onShowLoading();
     // run kobert model
     // save result
-    setTextResult("text result");
+    setTextResult("A4_농포_여드름");
     predictionCtx.onHideLoading();
     predictionCtx.onClickNextStage();
   };
@@ -27,6 +28,12 @@ const PredictionPage = () => {
 
     const formData = new FormData();
     formData.append("file", file);
+
+    const extra_data = {
+        text_result: textResult,
+        species: species,
+    }
+    formData.append("extra_data", JSON.stringify(extra_data));
 
     // run yolo model
     try {

@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Depends, Form
 from sqlalchemy.orm import Session
 from fastapi import File, UploadFile
 from starlette.responses import Response
@@ -15,10 +15,10 @@ router = APIRouter(
     prefix="/api/result",
 )
 
-model = get_yolov5()
-
 @router.post("/detection")
-async def detect_disease_return_json_result(file: bytes = File(...)):
+async def detect_disease_return_json_result(file: bytes = File(...), extra_data: str = Form(...)):
+    extra_data_json = json.loads(extra_data)
+    model = get_yolov5(extra_data_json['species'], extra_data_json['text_result'])
     input_image = get_image_from_bytes(file)
     results = model(input_image)
 
@@ -27,7 +27,9 @@ async def detect_disease_return_json_result(file: bytes = File(...)):
     return {"result": detect_res}
 
 @router.post("/detected_img")
-async def detect_disease_return_base64_img(file: bytes = File(...)):
+async def detect_disease_return_base64_img(file: bytes = File(...), extra_data: str = Form(...)):
+    extra_data_json = json.loads(extra_data)
+    model = get_yolov5(extra_data_json['species'], extra_data_json['text_result'])
     input_image = get_image_from_bytes(file)
     results = model(input_image)
 
@@ -38,12 +40,6 @@ async def detect_disease_return_base64_img(file: bytes = File(...)):
         img_base64.save(bytes_io, format="jpeg")
 
     return Response(content=bytes_io.getvalue(), media_type="image/jpg")
-
-
-
-
-
-
 
 # @router.get("/{disease_id}", response_model=result_schema.DiseaseInfo)
 # def result(disease_id: int, db: Session = Depends(get_db)):
