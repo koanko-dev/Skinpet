@@ -2,6 +2,7 @@ import React, { useContext, useState } from "react";
 import PredictionContext from "../store/prediction_context";
 import PredictionQImageStage from "../components/PredictionQImageStage";
 import PredictionResultStage from "../components/PredictionResultStage";
+import PredictionQTextStage from "../components/PredictionQTextStage";
 
 const PredictionPage = () => {
   const predictionCtx = useContext(PredictionContext);
@@ -9,12 +10,29 @@ const PredictionPage = () => {
   const [jsonResult, setJsonResult] = useState(null);
   const [imageSrc, setImageSrc] = useState(null);
 
-  const textSubmitHandler = () => {
-    console.log("text submit!");
+  const textSubmitHandler = async (text) => {
+    console.log("text submit!", text);
     predictionCtx.onShowLoading();
+
     // run kobert model
     // save result
-    setTextResult("A2_비듬_각질_상피성잔고리");
+    try {
+      const endpoint = "http://127.0.0.1:8000/api/text/run_kobert";
+      const response = await fetch(endpoint, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ text: text }),
+      });
+
+      if (response.ok) {
+        setTextResult("A2_비듬_각질_상피성잔고리");
+      }
+    } catch (err) {
+      console.log("err!", err);
+    }
+
     predictionCtx.onHideLoading();
     predictionCtx.onClickNextStage();
   };
@@ -84,7 +102,7 @@ const PredictionPage = () => {
       });
 
       if (response.ok) {
-        console.log('target idx of results: ', targetIdx)
+        console.log("target idx of results: ", targetIdx);
         const blob = await response.blob();
         const imageUrl = URL.createObjectURL(blob);
         setImageSrc(imageUrl);
@@ -110,12 +128,10 @@ const PredictionPage = () => {
   // stage 1: QText
   if (predictionCtx.stage === "QText") {
     content = (
-      <div>
-        피부질환에 대해 질문하세요.
-        <input type="text" />
-        <button onClick={textSubmitHandler}>submit</button>
-        <button onClick={clickNextStageHandler}>skip</button>
-      </div>
+      <PredictionQTextStage
+        onTextSubmit={textSubmitHandler}
+        onClickNextStage={clickNextStageHandler}
+      />
     );
   }
 

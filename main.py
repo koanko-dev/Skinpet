@@ -2,6 +2,7 @@ from fastapi import FastAPI
 from starlette.middleware.cors import CORSMiddleware
 
 from domain.result import result_router
+from domain.text import text_router
 
 app = FastAPI()
 
@@ -18,3 +19,4 @@ app.add_middleware(
 )
 
 app.include_router(result_router.router)
+app.include_router(text_router.router)
