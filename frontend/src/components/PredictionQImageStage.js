@@ -3,11 +3,16 @@ import React, { useState } from "react";
 const PredictionQImageStage = (props) => {
   const { textResult, onSubmitImg, onClickPrevStage } = props;
   const [file, setFile] = useState(null);
+  const [selectedSpecies, setSelectedSpecies] = useState("cat");
 
-  const handleFileChange = (e) => {
+  const fileChangeHandler = (e) => {
     if (e.target.files) {
       setFile(e.target.files[0]);
     }
+  };
+
+  const changeRadioInputHanlder = (e) => {
+    setSelectedSpecies(e.target.value)
   };
 
   return (
@@ -19,10 +24,15 @@ const PredictionQImageStage = (props) => {
         </div>
       )}
       피부질환 사진을 올려주세요.
-      <input type="file" onChange={handleFileChange} />
+      <input type="file" onChange={fileChangeHandler} />
       <div>{file && `${file.name} - ${file.type}`}</div>
-      
-      <button onClick={() => onSubmitImg(file)}>submit</button>
+      <form>
+        <label>고양이</label>
+        <input type="radio" value="cat" checked={selectedSpecies === "cat"}  onChange={changeRadioInputHanlder} />
+        <label>강아지</label>
+        <input type="radio" value="dog" checked={selectedSpecies === "dog"} onChange={changeRadioInputHanlder} />
+      </form>
+      <button onClick={() => onSubmitImg(file, selectedSpecies)}>submit</button>
       <button onClick={onClickPrevStage}>prev</button>
     </div>
   );

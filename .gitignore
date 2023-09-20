@@ -1,4 +1,5 @@
 *.db
+*.pt
 
 # Created by https://www.toptal.com/developers/gitignore/api/venv,visualstudiocode,react
 # Edit at https://www.toptal.com/developers/gitignore?templates=venv,visualstudiocode,react

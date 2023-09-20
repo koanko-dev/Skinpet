@@ -6,7 +6,6 @@ import PredictionResultStage from "../components/PredictionResultStage";
 const PredictionPage = () => {
   const predictionCtx = useContext(PredictionContext);
   const [textResult, setTextResult] = useState(null);
-  const [species, setSpecies] = useState("cat");
   const [jsonResult, setJsonResult] = useState(null);
   const [imageSrc, setImageSrc] = useState(null);
 
@@ -20,7 +19,7 @@ const PredictionPage = () => {
     predictionCtx.onClickNextStage();
   };
 
-  const imgSubmitHandler = async (file) => {
+  const imgSubmitHandler = async (file, selectedSpecies) => {
     if (!file) {
       return;
     }
@@ -34,7 +33,7 @@ const PredictionPage = () => {
       const formData = new FormData();
       const extra_data = {
         text_result: textResult,
-        species: species,
+        species: selectedSpecies,
       };
       formData.append("file", file);
       formData.append("extra_data", JSON.stringify(extra_data));
