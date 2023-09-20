@@ -20,7 +20,6 @@ detected_results = []
 @router.post("/detected_json")
 async def detect_disease_return_json_result(file: bytes = File(...), extra_data: str = Form(...)):
     global detected_results
-    results = []
 
     extra_data_json = json.loads(extra_data)
     species = extra_data_json['species']
@@ -32,6 +31,7 @@ async def detect_disease_return_json_result(file: bytes = File(...), extra_data:
     else:
         models = get_yolov5(species, text_result)
 
+    results = []
     for model in models:
         result = model(input_image)
         detected_results.append(result)
@@ -42,11 +42,11 @@ async def detect_disease_return_json_result(file: bytes = File(...), extra_data:
     return {"results": results}
 
 @router.post("/detected_img")
-async def detect_disease_return_base64_img(_target_index: result_schema.TargetIndex):
-    result = detected_results[_target_index.target_index]
-    result.render()  # updates results.ims with boxes and labels
+async def detect_disease_return_base64_img(_target_result_idx: result_schema.TargetIndex):
+    target_result = detected_results[_target_result_idx.target_index]
+    target_result.render()  # updates results.ims with boxes and labels
     bytes_io = io.BytesIO()
-    img_base64 = Image.fromarray(result.ims[0])
+    img_base64 = Image.fromarray(target_result.ims[0])
     img_base64.save(bytes_io, format="jpeg")
 
     return Response(content=bytes_io.getvalue(), media_type="image/jpg")

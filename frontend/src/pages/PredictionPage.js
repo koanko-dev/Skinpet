@@ -32,12 +32,11 @@ const PredictionPage = () => {
     // fetch detected json result
     try {
       const formData = new FormData();
-      formData.append("file", file);
-
       const extra_data = {
         text_result: textResult,
         species: species,
       };
+      formData.append("file", file);
       formData.append("extra_data", JSON.stringify(extra_data));
 
       const endpoint = "http://127.0.0.1:8000/api/result/detected_json";
@@ -49,7 +48,7 @@ const PredictionPage = () => {
       if (response.ok) {
         const json = await response.json();
         const results = json.results;
-        console.log("res json", results);
+        console.log("res json results: ", results);
 
         let target_confidence = 0;
         let target_disease_idx = 0;
@@ -86,6 +85,7 @@ const PredictionPage = () => {
       });
 
       if (response.ok) {
+        console.log('target idx of results: ', targetIdx)
         const blob = await response.blob();
         const imageUrl = URL.createObjectURL(blob);
         setImageSrc(imageUrl);
