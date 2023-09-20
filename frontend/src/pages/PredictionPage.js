@@ -6,8 +6,8 @@ import PredictionResultStage from "../components/PredictionResultStage";
 const PredictionPage = () => {
   const predictionCtx = useContext(PredictionContext);
   const [textResult, setTextResult] = useState(null);
-  const [species, setSpecies] = useState('cat');
-  const [imgResult, setImgResult] = useState(null);
+  const [species, setSpecies] = useState("cat");
+  const [jsonResult, setJsonResult] = useState(null);
   const [imageSrc, setImageSrc] = useState(null);
 
   const textSubmitHandler = () => {
@@ -15,7 +15,7 @@ const PredictionPage = () => {
     predictionCtx.onShowLoading();
     // run kobert model
     // save result
-    setTextResult("A4_농포_여드름");
+    setTextResult("A2_비듬_각질_상피성잔고리");
     predictionCtx.onHideLoading();
     predictionCtx.onClickNextStage();
   };
@@ -26,18 +26,21 @@ const PredictionPage = () => {
     }
     predictionCtx.onShowLoading();
 
-    const formData = new FormData();
-    formData.append("file", file);
-
-    const extra_data = {
-        text_result: textResult,
-        species: species,
-    }
-    formData.append("extra_data", JSON.stringify(extra_data));
+    let targetIdx = 0;
 
     // run yolo model
+    // fetch detected json result
     try {
-      const endpoint = "http://127.0.0.1:8000/api/result/detection";
+      const formData = new FormData();
+      formData.append("file", file);
+
+      const extra_data = {
+        text_result: textResult,
+        species: species,
+      };
+      formData.append("extra_data", JSON.stringify(extra_data));
+
+      const endpoint = "http://127.0.0.1:8000/api/result/detected_json";
       const response = await fetch(endpoint, {
         method: "POST",
         body: formData,
@@ -45,23 +48,41 @@ const PredictionPage = () => {
 
       if (response.ok) {
         const json = await response.json();
-        console.log("res json", json.result);
+        const results = json.results;
+        console.log("res json", results);
+
+        let target_confidence = 0;
+        let target_disease_idx = 0;
+
+        for (let [idx, disease_json] of results.entries()) {
+          for (let box of disease_json) {
+            if (target_confidence < box.confidence) {
+              target_confidence = box.confidence;
+              target_disease_idx = idx;
+              targetIdx = idx;
+            }
+          }
+        }
 
         const result = {
-          class: json.result[0].class,
-          confidence: json.result[0].confidence,
+          className: results[target_disease_idx][0].name,
+          confidence: target_confidence,
         };
-        setImgResult(result);
+        setJsonResult(result);
       }
     } catch (err) {
-      //   console.log("err!", err);
+      console.log("err!", err);
     }
 
+    // fetch detected img result
     try {
       const endpoint = "http://127.0.0.1:8000/api/result/detected_img";
       const response = await fetch(endpoint, {
         method: "POST",
-        body: formData,
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ target_index: targetIdx }),
       });
 
       if (response.ok) {
@@ -113,7 +134,11 @@ const PredictionPage = () => {
   // stage 3: result
   if (predictionCtx.stage === "result" && predictionCtx.isLoading === false) {
     content = (
-      <PredictionResultStage imgResult={imgResult} imageSrc={imageSrc} onClickPrevStage={clickPrevStageHandler} />
+      <PredictionResultStage
+        jsonResult={jsonResult}
+        imageSrc={imageSrc}
+        onClickPrevStage={clickPrevStageHandler}
+      />
     );
   }
 

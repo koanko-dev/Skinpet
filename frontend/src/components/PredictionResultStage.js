@@ -1,14 +1,14 @@
 import React from "react";
 
 const PredictionResultStage = (props) => {
-  const { imgResult, imageSrc, onClickPrevStage } = props;
+  const { jsonResult, imageSrc, onClickPrevStage } = props;
 
   return (
     <div>
-      {imgResult && (
+      {jsonResult && (
         <div>
-          <p>{imgResult.class}</p>
-          <p>{imgResult.confidence}</p>
+          <p>{jsonResult.className}</p>
+          <p>{jsonResult.confidence}</p>
         </div>
       )}
       {imageSrc && <img src={imageSrc} alt="결과이미지" />}

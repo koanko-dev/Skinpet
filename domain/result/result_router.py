@@ -15,29 +15,39 @@ router = APIRouter(
     prefix="/api/result",
 )
 
-@router.post("/detection")
-async def detect_disease_return_json_result(file: bytes = File(...), extra_data: str = Form(...)):
-    extra_data_json = json.loads(extra_data)
-    model = get_yolov5(extra_data_json['species'], extra_data_json['text_result'])
-    input_image = get_image_from_bytes(file)
-    results = model(input_image)
+detected_results = []
 
-    detect_res = results.pandas().xyxy[0].to_json(orient="records")
-    detect_res = json.loads(detect_res)
-    return {"result": detect_res}
+@router.post("/detected_json")
+async def detect_disease_return_json_result(file: bytes = File(...), extra_data: str = Form(...)):
+    global detected_results
+    results = []
+
+    extra_data_json = json.loads(extra_data)
+    species = extra_data_json['species']
+    text_result = extra_data_json['text_result']
+    input_image = get_image_from_bytes(file)
+
+    if text_result == None:
+        models = get_yolov5(species)
+    else:
+        models = get_yolov5(species, text_result)
+
+    for model in models:
+        result = model(input_image)
+        detected_results.append(result)
+        detect_res = result.pandas().xyxy[0].to_json(orient="records")
+        detect_res = json.loads(detect_res)
+        results.append(detect_res)
+
+    return {"results": results}
 
 @router.post("/detected_img")
-async def detect_disease_return_base64_img(file: bytes = File(...), extra_data: str = Form(...)):
-    extra_data_json = json.loads(extra_data)
-    model = get_yolov5(extra_data_json['species'], extra_data_json['text_result'])
-    input_image = get_image_from_bytes(file)
-    results = model(input_image)
-
-    results.render()  # updates results.ims with boxes and labels
-    for img in results.ims:
-        bytes_io = io.BytesIO()
-        img_base64 = Image.fromarray(img)
-        img_base64.save(bytes_io, format="jpeg")
+async def detect_disease_return_base64_img(_target_index: result_schema.TargetIndex):
+    result = detected_results[_target_index.target_index]
+    result.render()  # updates results.ims with boxes and labels
+    bytes_io = io.BytesIO()
+    img_base64 = Image.fromarray(result.ims[0])
+    img_base64.save(bytes_io, format="jpeg")
 
     return Response(content=bytes_io.getvalue(), media_type="image/jpg")
 

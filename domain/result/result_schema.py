@@ -1,4 +1,7 @@
-from pydantic import BaseModel, ConfigDict
+from pydantic import BaseModel, ConfigDict, validator
+
+class TargetIndex(BaseModel):
+    target_index: int
 
 class DiseaseInfo(BaseModel):
     model_config = ConfigDict(from_attributes=True)
