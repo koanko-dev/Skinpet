@@ -99,9 +99,7 @@ tokenizer = get_tokenizer()
 tok = nlp.data.BERTSPTokenizer(tokenizer, vocab, lower=False)
 
 def predict(predict_sentence):
-    print('--------------in predict----------------', predict_sentence)
     data = [predict_sentence, '0']
-    print('--------------data----------------', data)
     dataset_another = [data]
     print('--------------dataset_another----------------', dataset_another)
 
