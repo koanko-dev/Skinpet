@@ -6,7 +6,7 @@ import PredictionQTextStage from "../components/PredictionQTextStage";
 
 const PredictionPage = () => {
   const predictionCtx = useContext(PredictionContext);
-  const [textResult, setTextResult] = useState(null);
+  const [textResult, setTextResult] = useState([]);
   const [jsonResult, setJsonResult] = useState(null);
   const [imageSrc, setImageSrc] = useState(null);
 
@@ -17,7 +17,7 @@ const PredictionPage = () => {
     // run kobert model
     // save result
     try {
-      const endpoint = "http://127.0.0.1:8000/api/text/run_kobert";
+      const endpoint = "http://127.0.0.1:8000/api/text/text_diagnosis";
       const response = await fetch(endpoint, {
         method: "POST",
         headers: {
@@ -27,7 +27,9 @@ const PredictionPage = () => {
       });
 
       if (response.ok) {
-        setTextResult("A2_비듬_각질_상피성잔고리");
+        const json = await response.json();
+        const text_result = json.result.split('/');
+        setTextResult(text_result);
       }
     } catch (err) {
       console.log("err!", err);
@@ -50,7 +52,7 @@ const PredictionPage = () => {
     try {
       const formData = new FormData();
       const extra_data = {
-        text_result: textResult,
+        text_result: textResult[0],
         species: selectedSpecies,
       };
       formData.append("file", file);

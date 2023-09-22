@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { diseaseNameConverter } from "../util/diseaseName";
 
 const PredictionQImageStage = (props) => {
   const { textResult, onSubmitImg, onClickPrevStage } = props;
@@ -17,10 +18,11 @@ const PredictionQImageStage = (props) => {
 
   return (
     <div>
-      {textResult && (
+      {textResult.length > 0 && (
         <div>
-          텍스트로만 예측된 결과는 {textResult}입니다. 이미지로 다시 확인하기
-          원한다면
+          텍스트로만 예측된 결과는 {diseaseNameConverter(textResult[0])}입니다.<br/>
+          확률: {textResult[1]}<br/>
+          이미지로 다시 확인하기 원한다면 
         </div>
       )}
       피부질환 사진을 올려주세요.
