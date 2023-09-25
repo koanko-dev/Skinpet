@@ -1,8 +1,11 @@
 import React, { useContext, useState } from "react";
+import styled from "styled-components";
+
 import PredictionContext from "../store/prediction_context";
 import PredictionQImageStage from "../components/PredictionQImageStage";
 import PredictionResultStage from "../components/PredictionResultStage";
 import PredictionQTextStage from "../components/PredictionQTextStage";
+import Responsive from "../components/UI/Responsive";
 
 const PredictionPage = () => {
   const predictionCtx = useContext(PredictionContext);
@@ -28,7 +31,7 @@ const PredictionPage = () => {
 
       if (response.ok) {
         const json = await response.json();
-        const text_result = json.result.split('/');
+        const text_result = json.result.split("/");
         setTextResult(text_result);
       }
     } catch (err) {
@@ -159,7 +162,18 @@ const PredictionPage = () => {
     );
   }
 
-  return <>{content}</>;
+  return (
+    <PredictionPageBox>
+      <Wrapper>{content}</Wrapper>
+    </PredictionPageBox>
+  );
 };
 
 export default PredictionPage;
+
+const PredictionPageBox = styled.div`
+  padding-top: 2rem;
+  padding-bottom: 12rem;
+`;
+
+const Wrapper = styled(Responsive)``;
