@@ -172,7 +172,7 @@ const PredictionPage = () => {
 export default PredictionPage;
 
 const PredictionPageBox = styled.div`
-  padding-top: 2rem;
+  padding-top: 56px;
   padding-bottom: 12rem;
 `;
 

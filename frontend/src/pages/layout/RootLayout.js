@@ -24,6 +24,6 @@ const RootLayout = () => {
 export default RootLayout;
 
 const Main = styled.main`
-  margin-top: 48px;
+  margin-top: 56px;
   padding-bottom: 32px;
 `;

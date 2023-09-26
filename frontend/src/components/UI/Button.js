@@ -114,6 +114,18 @@ const small =
     return null;
   };
 
+const large =
+  () =>
+  ({ size }) => {
+    if (size === "large") {
+      return `
+        padding: 0.8rem 1.6rem;
+        height: fit-content;
+        `;
+    }
+    return null;
+  };
+
 const BasicButton = styled.button`
   padding: 0.5rem 1.2rem;
   color: ${palette.gray[8]};
@@ -132,4 +144,5 @@ const BasicButton = styled.button`
   ${outlineBlack}
   ${full}
   ${small}
+  ${large}
 `;
