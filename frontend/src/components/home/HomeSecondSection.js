@@ -7,6 +7,7 @@ import palette from "../../lib/styles/palette";
 import cardOneImg from "../../resources/img/card-one-img.png";
 import cardTwoImg from "../../resources/img/card-two-img.png";
 import cardThreeImg from "../../resources/img/card-three-img.png";
+import { ReactComponent as ArrowSvg } from "../../resources/img/two-line-arrow.svg";
 
 const HomeSecondSection = () => {
   return (
@@ -29,6 +30,9 @@ const HomeSecondSection = () => {
               </StepCardContent>
             </ImgContentBox>
           </StepCard>
+          <ArrowBox>
+            <ArrowSvg/>
+          </ArrowBox>
           <StepCard>
             <StepCardNumber>02</StepCardNumber>
             <ImgContentBox>
@@ -44,6 +48,9 @@ const HomeSecondSection = () => {
               </StepCardContent>
             </ImgContentBox>
           </StepCard>
+          <ArrowBox>
+            <ArrowSvg/>
+          </ArrowBox>
           <StepCard>
             <StepCardNumber>03</StepCardNumber>
             <ImgContentBox>
@@ -87,6 +94,7 @@ const ThreeStepsBox = styled.div`
   width: 100%;
   display: flex;
   justify-content: space-between;
+  align-items: center;
 `;
 
 const StepCard = styled.div`
@@ -96,6 +104,13 @@ const StepCard = styled.div`
   border-radius: 20px;
   padding: 1.5rem 1.5rem 2rem;
 `;
+
+const ArrowBox = styled.div`
+  width: 1.6rem;
+  > svg {
+    width: 100%;
+  }
+`
 
 const StepCardNumber = styled.div`
   font-size: 3rem;
