@@ -25,10 +25,10 @@ const basic =
   ({ theme }) => {
     if (theme === "basic") {
       return `
-        color: ${palette.gray[8]};
-        background-color: ${palette.yellow[5]};
+        color: white;
+        background-color: ${palette.green[2]};
         &:hover {
-            background-color: ${palette.yellow[6]};
+            background-color: ${palette.green[3]};
         }
         `;
     }
@@ -55,9 +55,9 @@ const outline =
   ({ theme }) => {
     if (theme === "outline") {
       return `
-        color: ${palette.yellow[5]};
+        color: ${palette.green[3]};
         background-color: transparent;
-        border: 1px solid ${palette.yellow[5]};
+        border: 1px solid ${palette.green[3]};
         `;
     }
     return null;

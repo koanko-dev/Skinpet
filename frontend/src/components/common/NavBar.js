@@ -2,15 +2,15 @@ import React from "react";
 import { Link, NavLink } from "react-router-dom";
 import styled from "styled-components";
 import Responsive from "../UI/Responsive";
+import palette from "../../lib/styles/palette";
 
 const NavBar = () => {
   return (
     <Header>
       <Wrapper>
         <NavBox>
-
           <HomeLinkBox>
-            <Link to="/">HOME</Link>
+            <Link to="/">Skinpet</Link>
           </HomeLinkBox>
 
           <NavListBox>
@@ -23,7 +23,6 @@ const NavBar = () => {
               </NavLink>
             </NavLi>
           </NavListBox>
-          
         </NavBox>
       </Wrapper>
     </Header>
@@ -33,18 +32,18 @@ const NavBar = () => {
 export default NavBar;
 
 const Header = styled.header`
-  border-radius: 20px;
   width: 100%;
-  height: 7rem;
+  height: 56px;
   position: fixed;
   top: 0;
   z-index: 10;
-  outline: 1px solid red;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
 `;
 
 const Wrapper = styled(Responsive)``;
 
 const NavBox = styled.nav`
+  height: 100%;
   font-weight: 400;
   display: flex;
   align-items: center;
@@ -53,37 +52,38 @@ const NavBox = styled.nav`
 `;
 
 const HomeLinkBox = styled.div`
-  height: 40px;
-  margin-top: 38px;
+  a {
+    font-weight: 800;
+    text-decoration: none;
+    color: ${palette.gray[8]};
+  }
 `;
 
 const NavListBox = styled.ul`
-  height: 40px;
-  position: absolute;
-  top: 30px;
-  left: 50%;
-  background-color: #fff;
-  transform: translateX(-50%);
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
   list-style-type: none;
   margin: 0;
-  padding: 0 32px;
-  border-radius: 20px;
-  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
 `;
 
 const NavLi = styled.li`
-  padding: 0px 20px;
-
   a {
     height: 100%;
+    text-decoration: none;
+    padding: 0.5rem 1.2rem;
+    font-size: 1rem;
+    border: none;
+    border-radius: 2rem;
+    box-sizing: border-box;
+    outline: none;
+    cursor: pointer;
+    transition: all 0.1s ease-in-out;
+    background-color: ${palette.green[2]};
+    color: white;
 
     &:hover,
     &:active,
     &.active {
-      color: salmon;
+      background-color: ${palette.green[3]};
+      color: white;
     }
   }
 `;

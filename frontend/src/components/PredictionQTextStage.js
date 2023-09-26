@@ -61,7 +61,7 @@ const TextInput = styled.input`
   box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.06);
   transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
   &:focus {
-    border-color: ${palette.yellow[3]};
+    border-color: ${palette.green[1]};
     outline: none;
   }
   &::placeholder {
