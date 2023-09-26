@@ -5,6 +5,7 @@ import styled from "styled-components";
 import HomeFirstSection from "../components/home/HomeFirstSection";
 import HomeSecondSection from "../components/home/HomeSecondSection";
 import HomeThirdSection from "../components/home/HomeThirdSection";
+import HomeFourthSection from "../components/home/HomeFourthSection";
 
 const HomePage = () => {
   return (
@@ -12,6 +13,7 @@ const HomePage = () => {
       <HomeFirstSection />
       <HomeSecondSection />
       <HomeThirdSection />
+      <HomeFourthSection />
     </HomePageBox>
   );
 };
