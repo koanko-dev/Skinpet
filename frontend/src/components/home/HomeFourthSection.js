@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 import styled from "styled-components";
 
@@ -18,9 +19,11 @@ const HomeFourthSection = () => {
             테스트를 해보세요.
           </Sub>
           <ButtonBox>
-            <Button theme="basic" size="large">
-              피부질환 분석해보기
-            </Button>
+            <Link to='/prediction'>
+                <Button theme="basic" size="large">
+                피부질환 분석해보기
+                </Button>
+            </Link>
           </ButtonBox>
         </TextBox>
         <ImgBox>

@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 import styled from "styled-components";
 
@@ -24,7 +25,9 @@ const HomeFirstSection = () => {
               치료 과정에 대해 알아볼 수 있습니다. 조기치료를 통해 반려동물과
               함께 하는 라이프를 즐겨보세요!
             </Sub>
-            <Button theme="basic" size="large">피부질환 분석해보기</Button>
+            <Link to='/prediction'>
+              <Button theme="basic" size="large">피부질환 분석해보기</Button>
+            </Link>
           </SubBox>
         </TitleSideBox>
         <ImageSideBox>
