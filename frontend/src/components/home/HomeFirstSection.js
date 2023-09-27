@@ -26,7 +26,7 @@ const HomeFirstSection = () => {
               함께 하는 라이프를 즐겨보세요!
             </Sub>
             <Link to='/prediction'>
-              <Button theme="basic" size="large">피부질환 분석해보기</Button>
+              <Button theme="point" size="large">피부질환 분석해보기</Button>
             </Link>
           </SubBox>
         </TitleSideBox>

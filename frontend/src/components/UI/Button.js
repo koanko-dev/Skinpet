@@ -41,7 +41,7 @@ const point =
     if (theme === "point") {
       return `
         color: white;
-        background-color: ${palette.point[0]};
+        background-color: ${palette.point[2]};
         &:hover {
             background-color: ${palette.point[1]};
         }
@@ -127,7 +127,7 @@ const large =
   };
 
 const BasicButton = styled.button`
-  padding: 0.5rem 1.2rem;
+  padding: 0.5rem 1.4rem;
   color: ${palette.gray[8]};
   font-family: "Poppins", sans-serif;
   font-size: 1rem;

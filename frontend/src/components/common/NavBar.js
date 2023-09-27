@@ -19,7 +19,7 @@ const NavBar = () => {
                 to="/prediction"
                 className={({ isActive }) => (isActive ? "active" : undefined)}
               >
-                Prediction
+                피부질환 분석
               </NavLink>
             </NavLi>
           </NavListBox>
