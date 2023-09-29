@@ -13,14 +13,14 @@ const ProgressBar = () => {
       <BarBox>
         <Progress stage={predictionCtx.stage}></Progress>
         <CircleBox
-          active={
+          isactive={
             predictionCtx.stage === "QText" ||
             predictionCtx.stage === "QImage" ||
             predictionCtx.stage === "result"
           }
         >
           <Circle
-            active={
+            isactive={
               predictionCtx.stage === "QText" ||
               predictionCtx.stage === "QImage" ||
               predictionCtx.stage === "result"
@@ -31,12 +31,12 @@ const ProgressBar = () => {
           <p>텍스트분석</p>
         </CircleBox>
         <CircleBox
-          active={
+          isactive={
             predictionCtx.stage === "QImage" || predictionCtx.stage === "result"
           }
         >
           <Circle
-            active={
+            isactive={
               predictionCtx.stage === "QImage" ||
               predictionCtx.stage === "result"
             }
@@ -45,8 +45,8 @@ const ProgressBar = () => {
           </Circle>
           <p>이미지분석</p>
         </CircleBox>
-        <CircleBox active={predictionCtx.stage === "result"}>
-          <Circle active={predictionCtx.stage === "result"}>3</Circle>
+        <CircleBox isactive={predictionCtx.stage === "result"}>
+          <Circle isactive={predictionCtx.stage === "result"}>3</Circle>
           <p>분석결과</p>
         </CircleBox>
       </BarBox>
@@ -60,6 +60,7 @@ const ProgressBarBox = styled.section`
   display: flex;
   flex-direction: column;
   align-items: center;
+  margin-bottom: 3rem;
 `;
 
 const ProgressBarTitle = styled.h2`
@@ -89,18 +90,16 @@ const BarBox = styled.div`
   }
 `;
 
-const activeProgress =
-  () =>
-  ({ stage }) => {
-    if (stage === "QText") {
-      return "width: 0%";
-    } else if (stage === "QImage") {
-      return "width: 50%";
-    } else if (stage === "result") {
-      return "width: 100%";
-    }
+const activeProgress = ({ stage }) => {
+  if (stage === "QText") {
     return "width: 0%";
-  };
+  } else if (stage === "QImage") {
+    return "width: 50%";
+  } else if (stage === "result") {
+    return "width: 100%";
+  }
+  return "width: 0%";
+};
 
 const Progress = styled.div`
   background-color: ${palette.blue[2]};
@@ -115,16 +114,14 @@ const Progress = styled.div`
   ${activeProgress}
 `;
 
-const activeP =
-  () =>
-  ({ active }) => {
-    if (active) {
-      return `
+const activeP = ({ isactive }) => {
+  if (isactive) {
+    return `
         color: ${palette.blue[2]};
       `;
-    }
-    return null;
-  };
+  }
+  return null;
+};
 
 const CircleBox = styled.div`
   position: relative;
@@ -140,17 +137,15 @@ const CircleBox = styled.div`
   }
 `;
 
-const activeCircle =
-  () =>
-  ({ active }) => {
-    if (active) {
-      return `
+const activeCircle = ({ isactive }) => {
+  if (isactive) {
+    return `
         border-color: ${palette.blue[2]};
         color: ${palette.blue[2]};
       `;
-    }
-    return null;
-  };
+  }
+  return null;
+};
 
 const Circle = styled.div`
   background-color: #fff;

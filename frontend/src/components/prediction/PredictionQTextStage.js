@@ -42,7 +42,7 @@ const QTextStageContent = styled.main`
 
 const Title = styled.h2``;
 
-const Subtitle = styled.h4`
+const Subtitle = styled.div`
   width: 100%;
   font-weight: normal;
   > p {
