@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { diseaseNameConverter } from "../util/diseaseName";
+import { diseaseNameConverter } from "../../util/diseaseName";
 
 const PredictionQImageStage = (props) => {
   const { textResult, onSubmitImg, onClickPrevStage } = props;

@@ -2,10 +2,11 @@ import React, { useContext, useState } from "react";
 import styled from "styled-components";
 
 import PredictionContext from "../store/prediction_context";
-import PredictionQImageStage from "../components/PredictionQImageStage";
-import PredictionResultStage from "../components/PredictionResultStage";
-import PredictionQTextStage from "../components/PredictionQTextStage";
+import PredictionQImageStage from "../components/prediction/PredictionQImageStage";
+import PredictionResultStage from "../components/prediction/PredictionResultStage";
+import PredictionQTextStage from "../components/prediction/PredictionQTextStage";
 import Responsive from "../components/UI/Responsive";
+import ProgressBar from "../components/prediction/ProgressBar";
 
 const PredictionPage = () => {
   const predictionCtx = useContext(PredictionContext);
@@ -164,7 +165,10 @@ const PredictionPage = () => {
 
   return (
     <PredictionPageBox>
-      <Wrapper>{content}</Wrapper>
+      <Wrapper>
+        <ProgressBar />
+        {content}
+      </Wrapper>
     </PredictionPageBox>
   );
 };

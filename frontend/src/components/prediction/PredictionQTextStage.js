@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 
-import Button from "./UI/Button";
-import palette from "../lib/styles/palette";
+import Button from "../UI/Button";
+import palette from "../../lib/styles/palette";
 
 const PredictionQTextStage = (props) => {
   const { onTextSubmit, onClickNextStage } = props;
