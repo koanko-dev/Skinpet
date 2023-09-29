@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import styled from "styled-components";
 
 import PredictionContext from "../store/prediction_context";
@@ -7,6 +7,7 @@ import PredictionResultStage from "../components/prediction/PredictionResultStag
 import PredictionQTextStage from "../components/prediction/PredictionQTextStage";
 import Responsive from "../components/UI/Responsive";
 import ProgressBar from "../components/prediction/ProgressBar";
+import Loading from "../components/UI/Loading";
 
 const PredictionPage = () => {
   const predictionCtx = useContext(PredictionContext);
@@ -129,10 +130,10 @@ const PredictionPage = () => {
     predictionCtx.onClickPrevStage();
   };
 
-  let content = "loading...";
+  let content = <Loading />;
 
   // stage 1: QText
-  if (predictionCtx.stage === "QText") {
+  if (predictionCtx.stage === "QText" && predictionCtx.isLoading === false) {
     content = (
       <PredictionQTextStage
         onTextSubmit={textSubmitHandler}
@@ -180,4 +181,8 @@ const PredictionPageBox = styled.div`
   padding-bottom: 12rem;
 `;
 
-const Wrapper = styled(Responsive)``;
+const Wrapper = styled(Responsive)`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;

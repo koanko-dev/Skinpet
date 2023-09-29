@@ -13,14 +13,14 @@ const ProgressBar = () => {
       <BarBox>
         <Progress stage={predictionCtx.stage}></Progress>
         <CircleBox
-          isActive={
+          active={
             predictionCtx.stage === "QText" ||
             predictionCtx.stage === "QImage" ||
             predictionCtx.stage === "result"
           }
         >
           <Circle
-            isActive={
+            active={
               predictionCtx.stage === "QText" ||
               predictionCtx.stage === "QImage" ||
               predictionCtx.stage === "result"
@@ -31,12 +31,12 @@ const ProgressBar = () => {
           <p>텍스트분석</p>
         </CircleBox>
         <CircleBox
-          isActive={
+          active={
             predictionCtx.stage === "QImage" || predictionCtx.stage === "result"
           }
         >
           <Circle
-            isActive={
+            active={
               predictionCtx.stage === "QImage" ||
               predictionCtx.stage === "result"
             }
@@ -45,8 +45,8 @@ const ProgressBar = () => {
           </Circle>
           <p>이미지분석</p>
         </CircleBox>
-        <CircleBox isActive={predictionCtx.stage === "result"}>
-          <Circle isActive={predictionCtx.stage === "result"}>3</Circle>
+        <CircleBox active={predictionCtx.stage === "result"}>
+          <Circle active={predictionCtx.stage === "result"}>3</Circle>
           <p>분석결과</p>
         </CircleBox>
       </BarBox>
@@ -117,8 +117,8 @@ const Progress = styled.div`
 
 const activeP =
   () =>
-  ({ isActive }) => {
-    if (isActive) {
+  ({ active }) => {
+    if (active) {
       return `
         color: ${palette.blue[2]};
       `;
@@ -142,8 +142,8 @@ const CircleBox = styled.div`
 
 const activeCircle =
   () =>
-  ({ isActive }) => {
-    if (isActive) {
+  ({ active }) => {
+    if (active) {
       return `
         border-color: ${palette.blue[2]};
         color: ${palette.blue[2]};
