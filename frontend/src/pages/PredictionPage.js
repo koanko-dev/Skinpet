@@ -11,7 +11,7 @@ import Loading from "../components/UI/Loading";
 
 const PredictionPage = () => {
   const predictionCtx = useContext(PredictionContext);
-  const [textResult, setTextResult] = useState([]);
+  const [textResult, setTextResult] = useState([null, null]);
   const [jsonResult, setJsonResult] = useState(null);
   const [imageSrc, setImageSrc] = useState(null);
 
