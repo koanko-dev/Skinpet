@@ -51,9 +51,9 @@ async def detect_disease_return_base64_img(_target_result_idx: result_schema.Tar
 
     return Response(content=bytes_io.getvalue(), media_type="image/jpg")
 
-# @router.get("/{disease_id}", response_model=result_schema.DiseaseInfo)
-# def result(disease_id: int, db: Session = Depends(get_db)):
-#     disease_info = result_crud.get_disease_info(db, disease_id=disease_id)
-#     # 주변 병원 정보 함께 담아서 보내야 함
-#     return disease_info
+@router.get("/{disease_title}", response_model=result_schema.DiseaseInfo)
+def result(disease_title: str, db: Session = Depends(get_db)):
+    disease_info = result_crud.get_disease_info(db, disease_title=disease_title)
+    # 주변 병원 정보 함께 담아서 보내야 함
+    return disease_info
 
