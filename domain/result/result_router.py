@@ -50,10 +50,9 @@ async def detect_disease_return_base64_img(_target_result_idx: result_schema.Tar
 
     return Response(content=bytes_io.getvalue(), media_type="image/jpg")
 
-@router.get("/{disease_title}", response_model=result_schema.DiseaseInfo)
+@router.get("/disease_info/{disease_title}", response_model=result_schema.DiseaseInfo)
 def result(disease_title: str, db: Session = Depends(get_db)):
     disease_info = result_crud.get_disease_info(db, disease_title=disease_title)
-    # 주변 병원 정보 함께 담아서 보내야 함
     return disease_info
 
 # CSV 파일을 데이터베이스로 저장하는 엔드포인트
@@ -63,4 +62,10 @@ def load_csv_data():
     df = result_crud.read_csv_file('utils/sido_hospital_list.csv')
     result_crud.load_csv_data_to_db(db, df)
     return {"message": "Data loaded successfully"}
+
+@router.get("/hospital_info/{areas}", response_model=list[result_schema.HospitalInfo])
+def result(areas: str, db: Session = Depends(get_db)):
+    sido, sigungu = areas.split('_')
+    hospital_info_list = result_crud.get_hospital_infos(db, sido=sido, sigungu=sigungu)
+    return hospital_info_list[:10]
 

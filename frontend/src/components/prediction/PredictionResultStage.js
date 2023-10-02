@@ -4,27 +4,46 @@ import styled from "styled-components";
 import Button from "../UI/Button";
 import { diseaseNameConverter } from "../../util/diseaseName";
 import palette from "../../lib/styles/palette";
+import AreaFilter from "./AreaFilter";
 
 const PredictionResultStage = (props) => {
   const { jsonResult, imageSrc, onClickPrevStage } = props;
   const [diseaseInfo, setDiseaseInfo] = useState(null);
+  const [hospitalInfoList, setHospitalInfoList] = useState([]);
 
   useEffect(() => {
     if (jsonResult) {
       try {
-        fetch(`http://127.0.0.1:8000/api/result/${jsonResult.className}`).then(
-          (response) => {
-            response.json().then((json) => {
-              console.log(json);
-              setDiseaseInfo(json);
-            });
-          }
-        );
+        fetch(
+          `http://127.0.0.1:8000/api/result/disease_info/${jsonResult.className}`
+        ).then((response) => {
+          response.json().then((json) => {
+            console.log(json);
+            setDiseaseInfo(json);
+          });
+        });
       } catch (err) {
         console.log(err);
       }
     }
   }, [jsonResult]);
+
+  const hospitalFilterHandler = async (sido, sigungu) => {
+    const areas = [sido, sigungu].join("_");
+    try {
+      const response = await fetch(
+        `http://127.0.0.1:8000/api/result/hospital_info/${areas}`
+      );
+
+      if (response.ok) {
+        const resJson = await response.json();
+        console.log(resJson);
+        setHospitalInfoList(resJson);
+      }
+    } catch (err) {
+      console.log("err!", err);
+    }
+  };
 
   return (
     <ResultStageContent>
@@ -56,20 +75,24 @@ const PredictionResultStage = (props) => {
             <Sub>증상</Sub>
             <p>{diseaseInfo.symptoms}</p>
             <Sub>관리방법</Sub>
-            <p>{diseaseInfo.care_method.split('/').map((cm, idx) => {
-              return (
-                <span key={idx}>- {cm}</span>
-              )
-            })}</p>
+            <p>
+              {diseaseInfo.care_method.split("/").map((cm, idx) => {
+                return <span key={idx}>- {cm}</span>;
+              })}
+            </p>
             <Sub>치료과정</Sub>
-            <p>{diseaseInfo.treatment_process.split('/').map((tp, idx) => {
-              return (
-                <span key={idx}>- {tp}</span>
-              )
-            })}</p>
+            <p>
+              {diseaseInfo.treatment_process.split("/").map((tp, idx) => {
+                return <span key={idx}>- {tp}</span>;
+              })}
+            </p>
           </DiseaseInfoBox>
           <HospitalInfoBox>
             <Title>병원 정보</Title>
+            <AreaFilter onFilter={hospitalFilterHandler} />
+            {hospitalInfoList.length > 0 && hospitalInfoList.map((hospitalInfo) => {
+              return <p key={hospitalInfo.id}>{hospitalInfo.name}</p>;
+            })}
           </HospitalInfoBox>
         </>
       ) : (
@@ -152,5 +175,7 @@ const Sub = styled.h4`
 `;
 
 const HospitalInfoBox = styled.section`
+  width: 100%;
+  text-align: center;
   margin-bottom: 3rem;
 `;

@@ -9,6 +9,10 @@ def get_disease_info(db: Session, disease_title: str):
     disease_infos = db.query(DiseaseInfo).filter(DiseaseInfo.title == disease_title).all()
     return disease_infos[0]
 
+def get_hospital_infos(db: Session, sido: str, sigungu: str):
+    hospital_infos = db.query(HospitalInfo).filter(HospitalInfo.sido == sido, HospitalInfo.sigungu == sigungu).all()
+    return hospital_infos
+
 # load csv file
 def read_csv_file(file_path):
     try:
