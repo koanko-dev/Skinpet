@@ -1,13 +1,12 @@
 from fastapi import APIRouter, Depends, Form
 from sqlalchemy.orm import Session
-from fastapi import File, UploadFile
+from fastapi import File
 from starlette.responses import Response
 import io
 from PIL import Image
 import json
 
-from database import get_db
-from skinpet_models import DiseaseInfo, HospitalInfo
+from database import get_db, SessionLocal
 from domain.result import result_schema, result_crud
 from domain.result.segmentation import get_yolov5, get_image_from_bytes
 
@@ -56,4 +55,12 @@ def result(disease_title: str, db: Session = Depends(get_db)):
     disease_info = result_crud.get_disease_info(db, disease_title=disease_title)
     # 주변 병원 정보 함께 담아서 보내야 함
     return disease_info
+
+# CSV 파일을 데이터베이스로 저장하는 엔드포인트
+@router.post("/load_csv_data")
+def load_csv_data():
+    db = SessionLocal()
+    df = result_crud.read_csv_file('utils/sido_hospital_list.csv')
+    result_crud.load_csv_data_to_db(db, df)
+    return {"message": "Data loaded successfully"}
 

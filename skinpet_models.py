@@ -20,5 +20,7 @@ class HospitalInfo(Base):
 
     id = Column(Integer, primary_key=True)
     name = Column(String, nullable=False)
-    address = Column(String, nullable=False)
     phone_num = Column(String, nullable=False)
+    address = Column(String, nullable=False)
+    sido = Column(String, nullable=False)
+    sigungu = Column(String, nullable=True)
