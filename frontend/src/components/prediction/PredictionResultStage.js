@@ -25,7 +25,6 @@ const PredictionResultStage = (props) => {
           `http://127.0.0.1:8000/api/result/disease_info/${jsonResult.className}`
         ).then((response) => {
           response.json().then((json) => {
-            console.log(json);
             setDiseaseInfo(json);
 
             switch (json.title) {
@@ -67,7 +66,6 @@ const PredictionResultStage = (props) => {
 
       if (response.ok) {
         const resJson = await response.json();
-        console.log(resJson);
         setHospitalInfoList(resJson);
       }
     } catch (err) {

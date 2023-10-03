@@ -10,7 +10,10 @@ def get_disease_info(db: Session, disease_title: str):
     return disease_infos[0]
 
 def get_hospital_infos(db: Session, sido: str, sigungu: str):
-    hospital_infos = db.query(HospitalInfo).filter(HospitalInfo.sido == sido, HospitalInfo.sigungu == sigungu).all()
+    if sigungu == 'default':
+        hospital_infos = db.query(HospitalInfo).filter(HospitalInfo.sido == sido).all()    
+    else:
+        hospital_infos = db.query(HospitalInfo).filter(HospitalInfo.sido == sido, HospitalInfo.sigungu == sigungu).all()
     return hospital_infos
 
 # load csv file

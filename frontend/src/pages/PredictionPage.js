@@ -16,7 +16,6 @@ const PredictionPage = () => {
   const [imageSrc, setImageSrc] = useState(null);
 
   const textSubmitHandler = async (text) => {
-    console.log("text submit!", text);
     predictionCtx.onShowLoading();
 
     // run kobert model
@@ -72,7 +71,6 @@ const PredictionPage = () => {
       if (response.ok) {
         const json = await response.json();
         const results = json.results;
-        console.log("res json results: ", results);
 
         let target_confidence = 0;
         let target_disease_idx = 0;
@@ -109,7 +107,6 @@ const PredictionPage = () => {
       });
 
       if (response.ok) {
-        console.log("target idx of results: ", targetIdx);
         const blob = await response.blob();
         const imageUrl = URL.createObjectURL(blob);
         setImageSrc(imageUrl);

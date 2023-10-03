@@ -6,20 +6,23 @@ import {
   sido_list,
   seoul_gu_list,
   kk_gu_list,
+  default_gu_list,
 } from "../../lib/resources/filterResources";
 import Button from "../UI/Button";
 
 const AreaFilter = ({onFilter}) => {
-  const [sido, setSido] = useState("");
-  const [sigungu, setSigungu] = useState("");
+  const [sido, setSido] = useState("default");
+  const [sigungu, setSigungu] = useState("default");
   const [sigunguList, setSigunguList] = useState(seoul_gu_list);
 
   useEffect(() => {
-    setSigungu("")
+    setSigungu("default")
     if (sido === "서울특별시") {
       setSigunguList(seoul_gu_list);
     } else if (sido === "경기도") {
       setSigunguList(kk_gu_list);
+    } else {
+      setSigunguList(default_gu_list)
     }
   }, [sido]);
 
@@ -53,7 +56,7 @@ const AreaFilter = ({onFilter}) => {
         value={sido}
         onChange={sidoChangeHanlder}
       >
-        <option value="">{sidoFilterData.defaultText}</option>
+        <option value="default">{sidoFilterData.defaultText}</option>
         {sidoFilterData.optionValues.map((optionValue, index) => {
           return (
             <option key={optionValue} value={optionValue}>
@@ -68,7 +71,7 @@ const AreaFilter = ({onFilter}) => {
         value={sigungu}
         onChange={sigunguChangeHanlder}
       >
-        <option value="">{sigunguFilterData.defaultText}</option>
+        <option value="default">{sigunguFilterData.defaultText}</option>
         {sigunguFilterData.optionValues.map((optionValue, index) => {
           return (
             <option key={optionValue} value={optionValue}>
