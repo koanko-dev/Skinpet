@@ -2,17 +2,15 @@ import React, { useEffect, useState } from "react";
 
 import styled from "styled-components";
 
-import Button from "../UI/Button";
-import { diseaseNameConverter } from "../../util/diseaseName";
-import palette from "../../lib/styles/palette";
-import AreaFilter from "./AreaFilter";
 import a1Img from "../../resources/img/diseaseImgs/a1.jpg";
 import a2Img from "../../resources/img/diseaseImgs/a2.jpg";
 import a3Img from "../../resources/img/diseaseImgs/a3.jpg";
 import a4Img from "../../resources/img/diseaseImgs/a4.jpg";
 import a5Img from "../../resources/img/diseaseImgs/a5.jpg";
 import a6Img from "../../resources/img/diseaseImgs/a6.jpg";
-import FilteredHospitalItem from "./FilteredHospitalItem";
+import ResultBoxSection from "./ResultBoxSection";
+import DiseaseInfoSection from "./DiseaseInfoSection";
+import HospitalInfoSection from "./HospitalInfoSection";
 
 const PredictionResultStage = (props) => {
   const { jsonResult, imageSrc, onClickPrevStage } = props;
@@ -81,70 +79,19 @@ const PredictionResultStage = (props) => {
     <ResultStageContent>
       {imageSrc && jsonResult && diseaseInfo && (
         <>
-          <ResultBox>
-            <img src={imageSrc} alt="결과이미지" />
-            <h3>
-              이미지 분석 결과 발견된 피부질환은{" "}
-              <span>'{diseaseNameConverter(jsonResult.className)}'</span>{" "}
-              입니다.
-            </h3>
-            <p>
-              피부질환에 대한 더 정확한 진단을 위해서는 전문의사의 상담을
-              권장드립니다.
-            </p>
-            <span>
-              *만약 피부 질환 발생 부위가 아닌 다른 부분이 측정됐다면, 피부 질환
-              부위가 잘 보이는 다른 이미지를 넣어주세요
-            </span>
-            <Button theme="outline" onClick={onClickPrevStage}>
-              다른 이미지로 업로드하기
-            </Button>
-          </ResultBox>
-          <DiseaseInfoBox>
-            <Title>{diseaseNameConverter(diseaseInfo.title)} 질환정보</Title>
-            <img src={skinDiseaseImg} alt="skin disease" />
-            <p>{diseaseInfo.definition}</p>
-            <Sub>증상</Sub>
-            <p>
-              {diseaseInfo.symptoms.includes("/")
-                ? diseaseInfo.symptoms.split("/").map((s, idx) => {
-                    return <span key={idx}>- {s}</span>;
-                  })
-                : diseaseInfo.symptoms}
-            </p>
-            <Sub>관리방법</Sub>
-            <p>
-              {diseaseInfo.care_method.includes("/")
-                ? diseaseInfo.care_method.split("/").map((cm, idx) => {
-                    return <span key={idx}>- {cm}</span>;
-                  })
-                : diseaseInfo.care_method}
-            </p>
-            <Sub>치료과정</Sub>
-            <p>
-              {diseaseInfo.treatment_process.includes("/")
-                ? diseaseInfo.treatment_process.split("/").map((tp, idx) => {
-                    return <span key={idx}>- {tp}</span>;
-                  })
-                : diseaseInfo.treatment_process}
-            </p>
-          </DiseaseInfoBox>
-          <HospitalInfoBox>
-            <Title>병원 정보</Title>
-            <AreaFilter onFilter={hospitalFilterHandler} />
-            <HospitalListBox>
-              <FilteredHospitalItem info={{name: '병원 이름', address: '주소', phone_num: '전화번호'}} isCol></FilteredHospitalItem>
-              {hospitalInfoList.length > 0 ?
-                hospitalInfoList.map((hospitalInfo) => {
-                  return (
-                    <FilteredHospitalItem
-                      key={hospitalInfo.id}
-                      info={hospitalInfo}
-                    />
-                  );
-                }) : <p>검색된 병원 정보가 없습니다.</p>}
-            </HospitalListBox>
-          </HospitalInfoBox>
+          <ResultBoxSection
+            imageSrc={imageSrc}
+            jsonResult={jsonResult}
+            onClickPrevStage={onClickPrevStage}
+          />
+          <DiseaseInfoSection
+            diseaseInfo={diseaseInfo}
+            skinDiseaseImg={skinDiseaseImg}
+          />
+          <HospitalInfoSection
+            hospitalFilterHandler={hospitalFilterHandler}
+            hospitalInfoList={hospitalInfoList}
+          />
         </>
       )}
     </ResultStageContent>
@@ -162,84 +109,3 @@ const ResultStageContent = styled.main`
     width: 100%;
   }
 `;
-
-const ResultBox = styled.section`
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-bottom: 5rem;
-
-  > h3 {
-    font-size: 2rem;
-    font-weight: 300;
-    margin: 3rem 0 0;
-
-    > span {
-      font-weight: 600;
-    }
-  }
-
-  > p {
-    font-size: 18px;
-    font-weight: 300;
-    margin: 2rem 0 8px;
-  }
-
-  > span {
-    color: ${palette.gray[5]};
-    font-size: 14px;
-    font-weight: 300;
-    margin-bottom: 2rem;
-  }
-`;
-
-const DiseaseInfoBox = styled.section`
-  width: 100%;
-  margin-bottom: 3rem;
-  background-color: ${palette.green[0]};
-  border-radius: 12px;
-  padding: 5rem 3rem 4rem;
-  line-height: 22px;
-
-  p {
-    margin: 0 0 32px;
-  }
-
-  span {
-    display: block;
-    margin-bottom: 14px;
-  }
-
-  > img {
-    margin-bottom: 8px;
-  }
-`;
-
-const Title = styled.h3`
-  font-size: 2rem;
-  font-weight: 500;
-  margin: 0 0 1.5rem;
-  text-align: center;
-`;
-
-const Sub = styled.h4`
-  font-size: 24px;
-  font-weight: 500;
-  margin: 42px 0 22px;
-`;
-
-const HospitalInfoBox = styled.section`
-  width: 100%;
-  text-align: center;
-  margin-bottom: 3rem;
-`;
-
-const HospitalListBox = styled.div`
-  margin-top: 2rem;
-  text-align: center;
-
-  > p {
-    color: ${palette.gray[6]}
-  }
-`
