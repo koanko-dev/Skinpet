@@ -54,7 +54,7 @@ const ResultBox = styled.section`
   }
 
   > span {
-    color: ${palette.gray[5]};
+    color: ${palette.gray[6]};
     font-size: 14px;
     font-weight: 300;
     margin-bottom: 2rem;

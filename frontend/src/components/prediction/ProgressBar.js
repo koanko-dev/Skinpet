@@ -65,7 +65,7 @@ const ProgressBarBox = styled.section`
 
 const ProgressBarTitle = styled.h2`
   font-size: 2rem;
-  font-weight: 800;
+  font-weight: 600;
   text-align: center;
 `;
 
@@ -149,8 +149,8 @@ const activeCircle = ({ isactive }) => {
 
 const Circle = styled.div`
   background-color: #fff;
-  color: ${palette.gray[5]};
-  font-weight: 600;
+  color: ${palette.gray[4]};
+  font-weight: 800;
   border-radius: 50%;
   height: 30px;
   width: 30px;

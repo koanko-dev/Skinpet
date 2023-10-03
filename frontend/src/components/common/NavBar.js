@@ -3,6 +3,7 @@ import { Link, NavLink } from "react-router-dom";
 import styled from "styled-components";
 import Responsive from "../UI/Responsive";
 import palette from "../../lib/styles/palette";
+import { ReactComponent as FootPrintSvg } from "../../resources/img/green-footprint.svg";
 
 const NavBar = () => {
   return (
@@ -10,7 +11,7 @@ const NavBar = () => {
       <Wrapper>
         <NavBox>
           <HomeLinkBox>
-            <Link to="/">Skinpet</Link>
+            <Link to="/">Skinpet<FootPrintSvg width='15' height='20' fill={palette.gray[8]}/></Link>
           </HomeLinkBox>
 
           <NavListBox>
@@ -58,6 +59,10 @@ const HomeLinkBox = styled.div`
     text-decoration: none;
     color: ${palette.gray[8]};
   }
+
+  svg {
+    margin-left: 4px;
+  }
 `;
 
 const NavListBox = styled.ul`
@@ -69,8 +74,8 @@ const NavLi = styled.li`
   a {
     height: 100%;
     text-decoration: none;
-    padding: 0.5rem 1.2rem;
-    font-size: 1rem;
+    padding: 0.6rem 1.4rem;
+    font-size: 14px;
     border: none;
     border-radius: 2rem;
     box-sizing: border-box;

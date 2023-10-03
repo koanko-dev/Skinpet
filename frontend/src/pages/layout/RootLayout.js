@@ -3,6 +3,7 @@ import { Outlet, useLocation } from "react-router-dom";
 import styled from "styled-components";
 
 import NavBar from "../../components/common/NavBar";
+import palette from "../../lib/styles/palette";
 
 const RootLayout = () => {
   const { pathname } = useLocation();
@@ -26,4 +27,5 @@ export default RootLayout;
 const Main = styled.main`
   margin-top: 56px;
   padding-bottom: 32px;
+  color: ${palette.gray[9]}
 `;

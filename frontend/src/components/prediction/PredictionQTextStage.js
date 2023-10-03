@@ -19,7 +19,12 @@ const PredictionQTextStage = (props) => {
         <p>텍스트를 통한 피부질환 예측을 위해</p>
         <p>반려동물의 상태를 간단하게 말해주세요.</p>
       </Subtitle>
-      <TextInput type="text" value={inputText} placeholder="상태에 대해 입력하세요" onChange={inputChangeHandler} />
+      <TextInput
+        type="text"
+        value={inputText}
+        placeholder="상태에 대해 입력하세요"
+        onChange={inputChangeHandler}
+      />
       <ButtonBox>
         <Button theme="basic" onClick={() => onTextSubmit(inputText)}>
           확인하기
@@ -40,16 +45,20 @@ const QTextStageContent = styled.main`
   align-items: center;
 `;
 
-const Title = styled.h2``;
+const Title = styled.h2`
+  font-weight: 600;
+`;
 
 const Subtitle = styled.div`
   width: 100%;
-  font-weight: normal;
+  font-weight: 300;
+  margin-bottom: 28px;
   > p {
     text-align: center;
-    margin: 8px 0;
+    margin: 6px 0;
   }
 `;
+
 const TextInput = styled.input`
   height: 48px;
   width: 540px;

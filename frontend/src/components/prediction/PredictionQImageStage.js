@@ -112,11 +112,13 @@ const QImageStageContent = styled.main`
   align-items: center;
 `;
 
-const Title = styled.h2``;
+const Title = styled.h2`
+  font-weight: 600;
+`;
 
 const Sub = styled.div`
   width: 100%;
-  font-weight: normal;
+  font-weight: 300;
   > p {
     text-align: center;
     margin: 8px 0;
@@ -126,13 +128,17 @@ const Sub = styled.div`
 const SpeciesSelectingBox = styled.div`
   margin: 2rem 0;
   display: flex;
+
+  label {
+    font-weight: 300;
+  }
 `;
 
 const CatBox = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin: 0 8px;
+  margin: 0 12px;
 
   > img {
     width: 60px;
@@ -180,7 +186,7 @@ const DogBox = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin: 0 8px;
+  margin: 0 12px;
 
   > img {
     width: 60px;

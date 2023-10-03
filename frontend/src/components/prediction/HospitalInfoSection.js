@@ -34,8 +34,8 @@ export default HospitalInfoSection;
 
 const Title = styled.h3`
   font-size: 2rem;
-  font-weight: 500;
-  margin: 0 0 1.5rem;
+  font-weight: 600;
+  margin: 0 0 2rem;
   text-align: center;
 `;
 

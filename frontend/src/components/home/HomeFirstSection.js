@@ -6,7 +6,7 @@ import styled from "styled-components";
 import Responsive from "../UI/Responsive";
 import Button from "../UI/Button";
 import palette from "../../lib/styles/palette";
-import mainImg from '../../resources/img/home_img.png'
+import mainImg from "../../resources/img/home_img.png";
 
 const HomeFirstSection = () => {
   return (
@@ -21,17 +21,20 @@ const HomeFirstSection = () => {
           <SubBox>
             <Sub>
               빠른 진단을 통해 원인이 다양하고 치료가 어려운 반려동물 피부질환의
-              특성을 파악해보세요! 병원에 방문하기 전 해당 질병에 대한 정보 및
-              치료 과정에 대해 알아볼 수 있습니다. 조기치료를 통해 반려동물과
-              함께 하는 라이프를 즐겨보세요!
+              특성을 파악해보세요! <br />
+              병원에 방문하기 전 해당 질병에 대한 정보 및 치료 과정에 대해
+              알아볼 수 있습니다. 조기치료를 통해 반려동물과 함께 하는 라이프를
+              즐겨보세요!
             </Sub>
-            <Link to='/prediction'>
-              <Button theme="point" size="large">피부질환 분석해보기</Button>
+            <Link to="/prediction">
+              <Button theme="point" size="large">
+                피부질환 분석해보기
+              </Button>
             </Link>
           </SubBox>
         </TitleSideBox>
         <ImageSideBox>
-            <img src={mainImg} />
+          <img src={mainImg} />
         </ImageSideBox>
       </Wrapper>
     </HomeFirstSectionBox>
@@ -54,21 +57,24 @@ const Wrapper = styled(Responsive)`
 const TitleSideBox = styled.div`
   flex: 1;
   max-width: 500px;
-  /* display: flex;
-  flex-direction: column; */
 `;
 
 const Title = styled.h2`
-    font-size: 42px;
-    font-weight: 800;
+  font-size: 42px;
+  font-weight: 800;
+  margin-bottom: 1rem;
 `;
 
-const SubBox = styled.div`
-    font-size: 18px;
-    font-weight: 300;
-`;
+const SubBox = styled.div``;
 
-const Sub = styled.p``;
+const Sub = styled.p`
+  margin-bottom: 2rem;
+  word-break: keep-all;
+  line-height: 23px;
+  font-weight: 300;
+  font-size: 17px;
+  color: ${palette.gray[8]};
+`;
 
 const ImageSideBox = styled.div`
   flex: 1;

@@ -93,7 +93,7 @@ const FilterBox = styled.div`
 
 const SelectEl = styled.select`
   flex: 1;
-  margin: 0 2px;
+  margin-right: 8px;
   height: calc(1.5em + 0.75rem + 2px);
   display: block;
   padding: 0.375rem 0.75rem;
@@ -104,7 +104,7 @@ const SelectEl = styled.select`
   border: 1px solid ${palette.gray[3]};
   border-radius: 2rem;
   transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
-  color: ${palette.gray[7]};
+  color: ${palette.gray[6]};
 
   &:focus {
     outline: none;

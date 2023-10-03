@@ -44,7 +44,7 @@ export default DiseaseInfoSection;
 
 const DiseaseInfoBox = styled.section`
   width: 100%;
-  margin-bottom: 3rem;
+  margin-bottom: 5.5rem;
   background-color: ${palette.green[0]};
   border-radius: 12px;
   padding: 5rem 3rem 4rem;
@@ -52,6 +52,8 @@ const DiseaseInfoBox = styled.section`
 
   p {
     margin: 0 0 32px;
+    word-break: keep-all;
+    font-weight: 300;
   }
 
   span {
@@ -66,13 +68,13 @@ const DiseaseInfoBox = styled.section`
 
 const Title = styled.h3`
   font-size: 2rem;
-  font-weight: 500;
-  margin: 0 0 1.5rem;
+  font-weight: 600;
+  margin: 0 0 2rem;
   text-align: center;
 `;
 
 const Sub = styled.h4`
   font-size: 24px;
-  font-weight: 500;
-  margin: 42px 0 22px;
+  font-weight: 600;
+  margin: 48px 0 22px;
 `;

@@ -12,6 +12,7 @@ import ResultBoxSection from "./ResultBoxSection";
 import DiseaseInfoSection from "./DiseaseInfoSection";
 import HospitalInfoSection from "./HospitalInfoSection";
 import Button from "../UI/Button";
+import palette from "../../lib/styles/palette";
 
 const PredictionResultStage = (props) => {
   const { jsonResult, imageSrc, onClickPrevStage } = props;
@@ -99,7 +100,8 @@ const PredictionResultStage = (props) => {
           </ResultIsNotFoundMessage>
           <p>
             본 테스트는 단순 참고용이므로, 피부질환에 대한 더 정확한 진단을
-            위해서는 전문의사의 상담을 권장드립니다.
+            위해서는 <br />
+            전문의사의 상담을 권장드립니다.
           </p>
           <Button theme="outline" onClick={onClickPrevStage}>
             다른 이미지로 업로드하기
@@ -128,16 +130,18 @@ const ResultIsNotFoundBox = styled.section`
   flex-direction: column;
   align-items: center;
   margin-bottom: 5rem;
+  text-align: center;
 
   > p {
     font-size: 18px;
     font-weight: 300;
-    margin: 1rem 0 3rem;
+    color: ${palette.gray[8]};
+    margin: 1.5rem 0 2rem;
   }
 `;
 
-const ResultIsNotFoundMessage = styled.h3`
+const ResultIsNotFoundMessage = styled.h2`
   font-size: 2rem;
-  font-weight: 300;
+  font-weight: 400;
   margin: 3rem 0 0;
 `;

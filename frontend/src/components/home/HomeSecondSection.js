@@ -31,7 +31,7 @@ const HomeSecondSection = () => {
             </ImgContentBox>
           </StepCard>
           <ArrowBox>
-            <ArrowSvg/>
+            <ArrowSvg />
           </ArrowBox>
           <StepCard>
             <StepCardNumber>02</StepCardNumber>
@@ -49,7 +49,7 @@ const HomeSecondSection = () => {
             </ImgContentBox>
           </StepCard>
           <ArrowBox>
-            <ArrowSvg/>
+            <ArrowSvg />
           </ArrowBox>
           <StepCard>
             <StepCardNumber>03</StepCardNumber>
@@ -110,7 +110,7 @@ const ArrowBox = styled.div`
   > svg {
     width: 100%;
   }
-`
+`;
 
 const StepCardNumber = styled.div`
   font-size: 3rem;
@@ -137,15 +137,20 @@ const StepCardContent = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  text-align: center;
+  color: ${palette.gray[8]};
+
   > h5 {
     font-size: 1.2rem;
-    font-weight: 500;
-    margin: 12px 0;
+    font-weight: 600;
+    margin: 12px 0 10px;
   }
 
   > p {
     font-weight: 300;
     margin: 0;
+    font-size: 14px;
     padding: 0 8px;
+    word-break: keep-all;
   }
 `;

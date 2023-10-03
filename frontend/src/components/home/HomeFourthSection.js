@@ -48,6 +48,7 @@ const TextBox = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
+  margin-bottom: 1rem;
 `;
 
 const Title = styled.h2`
@@ -62,6 +63,7 @@ const Sub = styled.p`
   margin: 0 0 1.7rem;
   font-size: 1rem;
   font-weight: 400;
+  color: ${palette.gray[8]};
 `;
 
 const ButtonBox = styled.div`
