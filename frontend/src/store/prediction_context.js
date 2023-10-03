@@ -7,6 +7,7 @@ const PredictionContext = React.createContext({
   onClickPrevStage: () => {},
   onShowLoading: () => {},
   onHideLoading: () => {},
+  onSetStageToDefault: () => {},
 });
 
 export const PredictionContextProvider = (props) => {
@@ -30,6 +31,10 @@ export const PredictionContextProvider = (props) => {
     setIsLoading(false);
   };
 
+  const setStageToDefaultHandler = () => {
+    setStageNum(0)
+  };
+
   return (
     <PredictionContext.Provider
       value={{
@@ -39,6 +44,7 @@ export const PredictionContextProvider = (props) => {
         onClickPrevStage: clickPrevStageHandler,
         onShowLoading: showLoadingHandler,
         onHideLoading: hideLoadingHandler,
+        onSetStageToDefault: setStageToDefaultHandler,
       }}
     >
       {props.children}

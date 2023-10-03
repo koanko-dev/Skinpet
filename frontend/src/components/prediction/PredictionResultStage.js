@@ -11,6 +11,7 @@ import a6Img from "../../resources/img/diseaseImgs/a6.jpg";
 import ResultBoxSection from "./ResultBoxSection";
 import DiseaseInfoSection from "./DiseaseInfoSection";
 import HospitalInfoSection from "./HospitalInfoSection";
+import Button from "../UI/Button";
 
 const PredictionResultStage = (props) => {
   const { jsonResult, imageSrc, onClickPrevStage } = props;
@@ -75,7 +76,7 @@ const PredictionResultStage = (props) => {
 
   return (
     <ResultStageContent>
-      {imageSrc && jsonResult && diseaseInfo && (
+      {imageSrc && jsonResult && diseaseInfo ? (
         <>
           <ResultBoxSection
             imageSrc={imageSrc}
@@ -91,6 +92,19 @@ const PredictionResultStage = (props) => {
             hospitalInfoList={hospitalInfoList}
           />
         </>
+      ) : (
+        <ResultIsNotFoundBox>
+          <ResultIsNotFoundMessage>
+            이미지 분석 결과 피부질환이 발견되지 않았습니다.
+          </ResultIsNotFoundMessage>
+          <p>
+            본 테스트는 단순 참고용이므로, 피부질환에 대한 더 정확한 진단을
+            위해서는 전문의사의 상담을 권장드립니다.
+          </p>
+          <Button theme="outline" onClick={onClickPrevStage}>
+            다른 이미지로 업로드하기
+          </Button>
+        </ResultIsNotFoundBox>
       )}
     </ResultStageContent>
   );
@@ -106,4 +120,24 @@ const ResultStageContent = styled.main`
   img {
     width: 100%;
   }
+`;
+
+const ResultIsNotFoundBox = styled.section`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 5rem;
+
+  > p {
+    font-size: 18px;
+    font-weight: 300;
+    margin: 1rem 0 3rem;
+  }
+`;
+
+const ResultIsNotFoundMessage = styled.h3`
+  font-size: 2rem;
+  font-weight: 300;
+  margin: 3rem 0 0;
 `;

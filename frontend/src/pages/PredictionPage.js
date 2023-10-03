@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import styled from "styled-components";
 
 import PredictionContext from "../store/prediction_context";
@@ -14,6 +14,13 @@ const PredictionPage = () => {
   const [textResult, setTextResult] = useState([null, null]);
   const [jsonResult, setJsonResult] = useState(null);
   const [imageSrc, setImageSrc] = useState(null);
+
+  useEffect(() => {
+    return () => {
+      predictionCtx.onSetStageToDefault();
+    };
+    // eslint-disable-next-line
+  }, []);
 
   const textSubmitHandler = async (text) => {
     predictionCtx.onShowLoading();
@@ -51,12 +58,19 @@ const PredictionPage = () => {
 
     let targetIdx = 0;
 
+    let targetText = textResult[0];
+
+    // check textResult accuracy
+    if (textResult[0] && textResult[1] < 0.5) {
+      targetText = null;
+    }
+
     // run yolo model
     // fetch detected json result
     try {
       const formData = new FormData();
       const extra_data = {
-        text_result: textResult[0],
+        text_result: targetText,
         species: selectedSpecies,
       };
       formData.append("file", file);
@@ -71,6 +85,20 @@ const PredictionPage = () => {
       if (response.ok) {
         const json = await response.json();
         const results = json.results;
+
+        let isAllEmpty = true;
+        for (let r of results) {
+          if (r.length > 0) {
+            isAllEmpty = false;
+            break;
+          }
+        }
+
+        if (isAllEmpty) {
+          predictionCtx.onHideLoading();
+          predictionCtx.onClickNextStage();
+          return;
+        }
 
         let target_confidence = 0;
         let target_disease_idx = 0;
@@ -124,6 +152,13 @@ const PredictionPage = () => {
   };
 
   const clickPrevStageHandler = () => {
+    if (predictionCtx.stage === "QImage") {
+      setTextResult([null, null]);
+    } else if (predictionCtx.stage === "result") {
+      setJsonResult(null);
+      setImageSrc(null);
+    }
+
     predictionCtx.onClickPrevStage();
   };
 

@@ -31,6 +31,7 @@ async def detect_disease_return_json_result(file: bytes = File(...), extra_data:
         models = get_yolov5(species, text_result)
 
     results = []
+    detected_results = []
     for model in models:
         result = model(input_image)
         detected_results.append(result)

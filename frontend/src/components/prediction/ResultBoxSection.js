@@ -5,7 +5,7 @@ import Button from "../UI/Button";
 import palette from "../../lib/styles/palette";
 import { diseaseNameConverter } from "../../util/diseaseName";
 
-const ResultBoxSection = ({imageSrc, jsonResult, onClickPrevStage}) => {
+const ResultBoxSection = ({ imageSrc, jsonResult, onClickPrevStage }) => {
   return (
     <ResultBox>
       <img src={imageSrc} alt="결과이미지" />
@@ -14,8 +14,8 @@ const ResultBoxSection = ({imageSrc, jsonResult, onClickPrevStage}) => {
         <span>'{diseaseNameConverter(jsonResult.className)}'</span> 입니다.
       </h3>
       <p>
-        피부질환에 대한 더 정확한 진단을 위해서는 전문의사의 상담을
-        권장드립니다.
+        본 테스트는 단순 참고용이므로, 피부질환에 대한 더 정확한 진단을 위해서는
+        전문의사의 상담을 권장드립니다.
       </p>
       <span>
         *만약 피부 질환 발생 부위가 아닌 다른 부분이 측정됐다면, 피부 질환
