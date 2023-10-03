@@ -12,6 +12,7 @@ import a3Img from "../../resources/img/diseaseImgs/a3.jpg";
 import a4Img from "../../resources/img/diseaseImgs/a4.jpg";
 import a5Img from "../../resources/img/diseaseImgs/a5.jpg";
 import a6Img from "../../resources/img/diseaseImgs/a6.jpg";
+import FilteredHospitalItem from "./FilteredHospitalItem";
 
 const PredictionResultStage = (props) => {
   const { jsonResult, imageSrc, onClickPrevStage } = props;
@@ -131,10 +132,18 @@ const PredictionResultStage = (props) => {
           <HospitalInfoBox>
             <Title>병원 정보</Title>
             <AreaFilter onFilter={hospitalFilterHandler} />
-            {hospitalInfoList.length > 0 &&
-              hospitalInfoList.map((hospitalInfo) => {
-                return <p key={hospitalInfo.id}>{hospitalInfo.name}</p>;
-              })}
+            <HospitalListBox>
+              <FilteredHospitalItem info={{name: '병원 이름', address: '주소', phone_num: '전화번호'}} isCol></FilteredHospitalItem>
+              {hospitalInfoList.length > 0 ?
+                hospitalInfoList.map((hospitalInfo) => {
+                  return (
+                    <FilteredHospitalItem
+                      key={hospitalInfo.id}
+                      info={hospitalInfo}
+                    />
+                  );
+                }) : <p>검색된 병원 정보가 없습니다.</p>}
+            </HospitalListBox>
           </HospitalInfoBox>
         </>
       )}
@@ -225,3 +234,12 @@ const HospitalInfoBox = styled.section`
   text-align: center;
   margin-bottom: 3rem;
 `;
+
+const HospitalListBox = styled.div`
+  margin-top: 2rem;
+  text-align: center;
+
+  > p {
+    color: ${palette.gray[6]}
+  }
+`
