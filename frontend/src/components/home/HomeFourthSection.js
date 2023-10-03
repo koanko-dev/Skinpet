@@ -27,7 +27,7 @@ const HomeFourthSection = () => {
           </ButtonBox>
         </TextBox>
         <ImgBox>
-          <img src={petsImg} />
+          <img src={petsImg} alt="pets" />
         </ImgBox>
       </Wrapper>
     </HomeFourthSectionBox>

@@ -22,7 +22,7 @@ const HomeSecondSection = () => {
             <StepCardNumber>01</StepCardNumber>
             <ImgContentBox>
               <StepCardImg>
-                <img src={cardOneImg} />
+                <img src={cardOneImg} alt="first step" />
               </StepCardImg>
               <StepCardContent>
                 <h5>피부질환 텍스트분석</h5>
@@ -37,7 +37,7 @@ const HomeSecondSection = () => {
             <StepCardNumber>02</StepCardNumber>
             <ImgContentBox>
               <StepCardImg>
-                <img src={cardTwoImg} />
+                <img src={cardTwoImg} alt="second step" />
               </StepCardImg>
               <StepCardContent>
                 <h5>피부질환 이미지분석</h5>
@@ -55,7 +55,7 @@ const HomeSecondSection = () => {
             <StepCardNumber>03</StepCardNumber>
             <ImgContentBox>
               <StepCardImg>
-                <img src={cardThreeImg} />
+                <img src={cardThreeImg} alt="third step" />
               </StepCardImg>
               <StepCardContent>
                 <h5>피부질환 분석 결과</h5>

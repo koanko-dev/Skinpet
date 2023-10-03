@@ -11,7 +11,7 @@ const HomeThirdSection = () => {
     <HomeThirdSectionBox>
       <Wrapper>
         <LeftSideBox>
-          <img src={thridsectionImg} />
+          <img src={thridsectionImg} alt="introduction" />
         </LeftSideBox>
         <RightSideBox>
           <Title>

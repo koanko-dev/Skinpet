@@ -34,7 +34,7 @@ const HomeFirstSection = () => {
           </SubBox>
         </TitleSideBox>
         <ImageSideBox>
-          <img src={mainImg} />
+          <img src={mainImg} alt="main"/>
         </ImageSideBox>
       </Wrapper>
     </HomeFirstSectionBox>
