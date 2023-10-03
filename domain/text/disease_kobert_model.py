@@ -87,7 +87,7 @@ PATH = 'model/'
 model = BERTClassifier(bertmodel, dr_rate=0.5).to(device)
 # model.load_state_dict(torch.load(PATH + 'model_state_dict.pt', map_location=device))  # state_dict를 불러 온 후, 모델에 저장 => 에러발생
 # state_dict에서 예상치 못한 key인 "bert.embeddings.position_ids"를 제거한 후 모델을 로드
-state_dict = torch.load(PATH + 'model_state_dict.pt', map_location=device)
+state_dict = torch.load(PATH + 'model_state_dict_v2.pt', map_location=device)
 if "bert.embeddings.position_ids" in state_dict:
     del state_dict["bert.embeddings.position_ids"]
 model.load_state_dict(state_dict)
