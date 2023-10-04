@@ -7,6 +7,7 @@ import Responsive from "../UI/Responsive";
 import Button from "../UI/Button";
 import palette from "../../lib/styles/palette";
 import mainImg from "../../resources/img/home_img.png";
+import mainCat from "../../resources/img/cat_large.png";
 
 const HomeFirstSection = () => {
   return (
@@ -34,7 +35,7 @@ const HomeFirstSection = () => {
           </SubBox>
         </TitleSideBox>
         <ImageSideBox>
-          <img src={mainImg} alt="main"/>
+          <img src={mainCat} alt="main"/>
         </ImageSideBox>
       </Wrapper>
     </HomeFirstSectionBox>
@@ -52,6 +53,7 @@ const Wrapper = styled(Responsive)`
   display: flex;
   justify-content: space-between;
   align-items: center;
+  position: relative;
 `;
 
 const TitleSideBox = styled.div`
@@ -77,8 +79,11 @@ const Sub = styled.p`
 `;
 
 const ImageSideBox = styled.div`
-  flex: 1;
-  max-width: 500px;
+  flex: 1.3;
+  max-width: 550px;
+  position: relative;
+  left: 90px;
+  top: 12px;
 
   > img {
     width: 100%;
